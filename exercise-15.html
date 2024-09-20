@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exercise #15 || Animated logo</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/modern-normalize@2.0.0/modern-normalize.min.css"
+    />
+
+    <style>
+      body {
+        background-color: #f6e9fe;
+      }
+      .container {
+        display: grid;
+        width: 100%;
+        height: 90vh;
+        place-content: center;
+      }
+
+      #main-header {
+        display: flex;
+        margin: 1rem;
+      }
+
+      /* svg motion */
+      svg rect,
+      svg path {
+        stroke: #100319;
+        stroke-width: 20;
+        stroke-linecap: round;
+      }
+
+      svg {
+        overflow: visible;
+      }
+    </style>
+  </head>
+  <body>
+    <header id="main-header">
+      <a
+        href="./index.html"
+        style="
+          background-color: rgba(176, 176, 176, 0.766);
+          padding: 10px;
+          border: none;
+          border-radius: 50px;
+          cursor: pointer;
+          display: flex;
+        "
+        ><img src="icons/home.svg" alt="home" width="20" height="20"
+      /></a>
+    </header>
+    <div class="container">
+      <svg width="393" height="245" viewBox="0 0 393 245" fill="none">
+        <path
+          id="left"
+          d="M9.28885 122L8.74052 170.497C8.33154 206.669 37.3235 236.324 73.4958 236.733V236.733C109.668 237.142 139.323 208.15 139.732 171.978L140.28 123.481"
+          stroke="black"
+        />
+        <rect
+          id="middle"
+          x="255"
+          y="30"
+          width="185"
+          height="115"
+          rx="57.5"
+          transform="rotate(90 255 30)"
+          stroke="black"
+        />
+        <path
+          id="right"
+          d="M385 122V73.5C385 37.3254 355.675 8 319.5 8V8C283.325 8 254 37.3254 254 73.5V122"
+          stroke="black"
+        />
+      </svg>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/DrawSVGPlugin3.min.js"></script>
+
+    <script>
+      gsap.set("#middle", {
+        scale: 0,
+        transformOrigin: "50% 50%",
+        rotation: -90,
+      });
+
+      // timeline
+      let tl = gsap.timeline({
+        repeat: -1,
+        repeatDelay: 1.6,
+        yoyo: true,
+      });
+
+      // middle
+      tl.to("#middle", {
+        scale: 1,
+        rotation: 270,
+        duration: 1.2,
+        ease: "elastic.out",
+      });
+
+      // left
+      tl.fromTo(
+        "#left",
+        {
+          drawSVG: "100% 100%",
+        },
+        { drawSVG: "0% 100%", duration: 1.2, ease: "power4.inOut" }
+      );
+      // right
+      tl.fromTo(
+        "#right",
+        {
+          drawSVG: "100% 100%",
+        },
+        { drawSVG: "0% 100%", duration: 1.2, ease: "power4.inOut" }
+      );
+
+      // color
+      tl.to("#middle, #left, #right", { stroke: "#A41FF6", duration: 0.4 });
+    </script>
+  </body>
+</html>

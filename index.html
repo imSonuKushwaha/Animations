@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exercise #4 || Simple dropdown menu</title>
+
+    <!-- Reset -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/modern-normalize@2.0.0/modern-normalize.min.css"
+    />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --def-transition-duration: 0.2s;
+        --loader-text-color: #f6e9fe;
+        --loader-dot-color: #a51ff6;
+        --loader-bg: #100319;
+      }
+
+      html {
+        font-size: 16px;
+        font-family: "Figtree", sans-serif;
+        line-height: 1.5;
+        background-color: #151618;
+      }
+
+      img {
+        display: block;
+      }
+
+      #hero {
+        background-color: #151618;
+      }
+
+      #main-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 90%;
+        margin: 0 auto;
+      }
+
+      nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        gap: 3rem;
+      }
+
+      nav ul a {
+        text-decoration: none;
+        color: #a1a2a3;
+        display: inline-block;
+        padding: 1.5rem 0;
+      }
+
+      nav ul a:hover {
+        color: #e8e8e8;
+      }
+
+      .has-submenu {
+        position: relative;
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        justify-content: flex-start;
+      }
+
+      .has-submenu::after {
+        content: url("icons/icon-arrow-down.svg");
+        opacity: 0.6;
+        height: 25px;
+      }
+
+      .has-submenu:hover ul {
+        display: block;
+      }
+
+      .has-submenu ul {
+        position: absolute;
+        top: 100%;
+        left: -2rem;
+        background-color: #212224;
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        display: none;
+      }
+
+      .has-submenu ul a {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        min-width: 15rem;
+        border-radius: 0.5rem;
+      }
+
+      .has-submenu ul a::after {
+        content: url(icons/icon-arrow-right.svg);
+        height: 17px;
+        opacity: 0;
+      }
+
+      .has-submenu ul a:hover {
+        background-color: #2c2d2f;
+        padding: 1rem 1.5rem;
+      }
+
+      .has-submenu ul a:hover::after {
+        opacity: 1;
+      }
+
+      .has-submenu:hover::after {
+        opacity: 1;
+      }
+
+      .has-submenu:hover > a {
+        color: #e8e8e8;
+      }
+
+      button {
+        appearance: none;
+        border: 1px solid #9e70eb;
+        color: #9e70eb;
+        background-color: transparent;
+        border-radius: 10rem;
+        padding: 0.75rem 1.5rem;
+        cursor: pointer;
+      }
+
+      /* trasition css */
+      .nav4 ul a {
+        transition-property: color;
+      }
+
+      .has-submenu::after {
+        transition-property: opacity;
+      }
+
+      .has-submenu ul {
+        margin-bottom: 10rem;
+        display: block;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateX(-1rem);
+        transition-property: opacity, visibility, transform;
+      }
+
+      .has-submenu:hover ul {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(0);
+      }
+
+      .has-submenu ul a {
+        transition-property: background-color, padding;
+      }
+
+      .has-submenu ul a::after {
+        transition-property: opacity;
+      }
+
+      .nav4 ul a,
+      .has-submenu::after,
+      .has-submenu ul,
+      .has-submenu ul a,
+      .has-submenu ul a::after {
+        transition-duration: var(--def-transition-duration);
+        transition-timing-function: ease-in-out;
+      }
+
+      /* animation */
+      .loader-container {
+        height: 90vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      svg {
+        width: 40rem;
+        font-weight: 700;
+      }
+
+      svg text {
+        font-size: 5rem;
+        stroke-width: 2;
+        letter-spacing: -6px;
+      }
+
+      svg text.text-body {
+        stroke: var(--loader-text-color);
+        animation: 4s infinite alternate animate-strokes;
+      }
+
+      svg text.dot {
+        fill: var(--loader-dot-color);
+        stroke: var(--loader-dot-color);
+        animation: 4s infinite alternate animate-dot;
+      }
+
+      @keyframes animate-strokes {
+        0% {
+          fill: transparent;
+          stroke: var(--loader-text-color);
+          stroke-width: 3;
+          stroke-dashoffset: 25%;
+          stroke-dasharray: 0 32%;
+        }
+        50% {
+          fill: transparent;
+          stroke: var(--loader-text-color);
+          stroke-width: 3;
+        }
+        80%,
+        100% {
+          fill: var(--loader-text-color);
+          stroke: transparent;
+          stroke-width: 0;
+          stroke-dashoffset: -25%;
+          stroke-dasharray: 32% 0;
+        }
+      }
+
+      @keyframes animate-dot {
+        0%,
+        60% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="hero">
+      <header id="main-header">
+        <nav>
+          <ul>
+            <li class="has-submenu">
+              <a href="#">Pages</a>
+
+              <ul>
+                <li><a href="./exercise-6.html">Weather Forecast</a></li>
+                <li><a href="./exercise-8.html">Landscapes</a></li>
+                <li><a href="./exercise-10.html">Micro Intraction</a></li>
+                <li><a href="./exercise-13.html">Dropping Menu</a></li>
+                <li><a href="./exercise-15.html">GSAP Animation</a></li>
+                <li><a href="./exercise-16.html">page-16</a></li>
+                <li><a href="./exercise-17.html">page-17</a></li>
+                <li><a href="./exercise-18.html">page-18</a></li>
+                <li><a href="./exercise-19.html">page-19</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <div class="loader-container">
+        <svg viewbox="0 0 400 160 ">
+          <text
+            x="50%"
+            y="50%"
+            dy="0.32em"
+            text-anchor="middle"
+            class="text-body"
+          >
+            SONU
+          </text>
+          <text
+            x="50%"
+            y="50%"
+            dy="0.32em"
+            dx="1.4em"
+            text-anchor="middle"
+            class="text-body"
+          >
+            .
+          </text>
+        </svg>
+      </div>
+    </div>
+  </body>
+</html>
